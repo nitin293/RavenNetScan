@@ -1,5 +1,8 @@
 import scapy.all as scapy
 import argparse
+import os
+import getpass
+
 
 def banner():
     ban = '''
@@ -52,5 +55,14 @@ if __name__ == '__main__':
 
     iprange = args.range
 
-    map = netScan(iprange=iprange)
-    print_result(map)
+    if os.name=="posix":
+        if getpass.getuser().lower()=="root":
+            map = netScan(iprange=iprange)
+            print_result(map)
+
+        else:
+            print("[!] Run this script as ROOT !")
+
+    else:
+        map = netScan(iprange=iprange)
+        print_result(map)
